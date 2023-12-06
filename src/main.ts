@@ -26,6 +26,8 @@ import { UnexpectedExitException, BaseException } from './exceptions';
 
 
 async function main(): Promise<void> {
+    Logger.Info("デプロイスタート");
+
     const actionManager = new Orchestrator();
     actionManager.register(StateConstant.Initialize, new Initializer());
     actionManager.register(StateConstant.ValidateParameter, new ParameterValidator());
@@ -55,7 +57,7 @@ async function main(): Promise<void> {
             core.debug("Deployment Succeeded!");
             return
         case StateConstant.Failed:
-            core.setFailed("Deployment Failed!");
+            core.setFailed("失敗! Deployment Failed!");
             return
         default:
             const expt = new UnexpectedExitException(actionManager.state);
